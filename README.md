@@ -1,5 +1,6 @@
-# The Portfolio Project
+# Backend for microservices project
 
+[![Build Status](https://travis-ci.com/Anshelen/microservices-backend.svg?branch=master)](https://travis-ci.com/Anshelen/microservices-backend)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 ## About
