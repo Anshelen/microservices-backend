@@ -5,36 +5,46 @@ pipeline {
     skipStagesAfterUnstable()
   }
   stages {
-    stage('Build') {
+    stage('Checkout') {
       agent any
       steps {
         checkout scm
-        sh './mvnw compile'
-        stash(name: 'compiled', includes: '**')
+        stash(name: 'sources', includes: '**')
       }
     }
 
-    stage('Test') {
+    stage("Prepare container") {
       agent {
         docker {
           image 'openjdk:11.0.5-slim'
           args '-v $HOME/.m2:/root/.m2'
         }
       }
-      steps {
-        unstash 'compiled'
-        sh './mvnw test'
-        junit '**/target/surefire-reports/TEST-*.xml'
+      stages {
+        stage('Build') {
+          steps {
+            unstash 'sources'
+            sh './mvnw compile'
+            stash(name: 'compiled', includes: '**')
+          }
+        }
+        stage('Test') {
+          steps {
+            unstash 'compiled'
+            sh './mvnw test'
+            junit '**/target/surefire-reports/TEST-*.xml'
+          }
+        }
       }
     }
 
-    stage('Push Docker Images') {
+    stage('Push images') {
       agent any
       when {
         branch 'master'
       }
       steps {
-        unstash 'compiled'
+        unstash 'sources'
         script {
           def imageName = "anshelen/microservices-backend:v$BUILD_NUMBER"
           def dockerImage = docker.build(imageName)
