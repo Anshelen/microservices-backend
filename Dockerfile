@@ -18,7 +18,7 @@ RUN /usr/lib/jvm/java-11-openjdk/bin/jlink \
 
 
 FROM alpine:3.10.3
-MAINTAINER Anton Shelenkov "https://github.com/Anshelen"
+LABEL maintainer="Anton Shelenkov anshelen@yandex.ru"
 ENV JAVA_HOME=/opt/java-minimal
 ENV PATH="$PATH:$JAVA_HOME/bin"
 COPY --from=packager "$JAVA_HOME" "$JAVA_HOME"
