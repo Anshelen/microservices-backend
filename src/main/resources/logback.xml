@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="OUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <fieldNames>
+                <version>[ignore]</version>
+                <levelValue>[ignore]</levelValue>
+            </fieldNames>
+            <timeZone>UTC</timeZone>
+            <shortenedLoggerNameLength>36</shortenedLoggerNameLength>
+            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                <maxLength>2048</maxLength>
+                <shortenedClassNameLength>20</shortenedClassNameLength>
+                <rootCauseFirst>true</rootCauseFirst>
+                <inlineHash>true</inlineHash>
+
+                <!-- generated class names -->
+                <exclude>\$\$FastClassByCGLIB\$\$</exclude>
+                <exclude>\$\$EnhancerBySpringCGLIB\$\$</exclude>
+                <exclude>^sun\.reflect\..*\.invoke</exclude>
+                <!-- JDK internals -->
+                <exclude>^com\.sun\.</exclude>
+                <exclude>^sun\.net\.</exclude>
+                <!-- dynamic invocation -->
+                <exclude>^net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
+                <exclude>^org\.springframework\.cglib\.</exclude>
+                <exclude>^org\.springframework\.transaction\.</exclude>
+                <exclude>^org\.springframework\.validation\.</exclude>
+                <exclude>^org\.springframework\.app\.</exclude>
+                <exclude>^org\.springframework\.aop\.</exclude>
+                <exclude>^java\.lang\.reflect\.Method\.invoke</exclude>
+                <!-- Spring plumbing -->
+                <exclude>^org\.springframework\.ws\..*\.invoke</exclude>
+                <exclude>^org\.springframework\.ws\.transport\.</exclude>
+                <exclude>^org\.springframework\.ws\.soap\.saaj\.SaajSoapMessage\.</exclude>
+                <exclude>^org\.springframework\.ws\.client\.core\.WebServiceTemplate\.</exclude>
+                <exclude>^org\.springframework\.web\.filter\.</exclude>
+                <!-- Tomcat internals -->
+                <exclude>^org\.apache\.tomcat\.</exclude>
+                <exclude>^org\.apache\.catalina\.</exclude>
+                <exclude>^org\.apache\.coyote\.</exclude>
+                <exclude>^java\.util\.concurrent\.ThreadPoolExecutor\.runWorker</exclude>
+                <exclude>^java\.lang\.Thread\.run$</exclude>
+            </throwableConverter>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="OUT"/>
+    </root>
+</configuration>
